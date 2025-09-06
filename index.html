@@ -9,8 +9,8 @@
   <meta name="keywords" content="Dynamics Model Learning, Model Predictive Control">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>Beyond Constant Parameters: Hyper Prediction Models and HyperMPC</title>
-  <link rel="icon" type="image/jpeg" href="static/images/F1.jpg">
+  <title>HyperMPC</title>
+  <link rel="icon" href="data:,">
   <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
   rel="stylesheet">
 
@@ -28,6 +28,11 @@
   <script src="static/js/bulma-carousel.min.js"></script>
   <script src="static/js/bulma-slider.min.js"></script>
   <script src="static/js/index.js"></script>
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
 </head>
 <body>
 
@@ -69,7 +74,7 @@
                     <span class="icon">
                       <i class="fab fa-github"></i>
                     </span>
-                    <span>Code [cooming soon]</span>
+                    <span>Code cooming soon</span>
                   </a>
                 </span>
 
@@ -96,14 +101,20 @@
 <section class="hero teaser is-light">
   <div class="container is-max-desktop">
     <div class="hero-body" style="padding: 3rem 0;">
-      <video poster="" id="tree" autoplay controls muted loop height="100%">
-        <!-- Your video here -->
-        <source src="static/videos/Hyper_Prediction_Models_Video.mp4"
-        type="video/mp4">
+      <video id="tree" autoplay muted loop playsinline controls width="100%">
+        <source src="static/videos/Hyper_Prediction_Models_Video.mp4" type="video/mp4">
       </video>
-      <figcaption style="text-align: center; font-style: italic; margin-top: 5px;">
-    PODPIS
-  </figcaption>
+      <figcaption style="text-align: justify; font-style: italic; margin-top: 5px;">
+        HyperPM leverages the recent state 
+        <span style="color:rgba(131, 52, 206, 0.808);">\( x[t - t_h,\, t] \)</span> 
+        and control 
+        <span style="color:rgba(185, 1, 1, 0.877); white-space: nowrap;">\( u[t - t_h,\, t] \)</span> 
+        history, together with the planned control sequence 
+        <span style="color:rgb(5, 161, 5); white-space: nowrap;">\( \hat{u}[t,\, t + t_p] \)</span>, 
+        to predict a trajectory of time-varying model parameters 
+        <span style="color:rgba(71, 125, 226, 0.856);">\( \theta[t,\, t + t_p] \)</span>. 
+        Injecting these predicted parameters into the nominal dynamics yields more accurate long-horizon state forecasts, allowing HyperMPC to proactively anticipate and compensate for previously unmodeled effects.
+      </figcaption>
     </div>
   </div>
 </section>
@@ -113,9 +124,9 @@
 <section class="section hero">
   <div class="container is-max-desktop">
     <div class="columns is-centered has-text-centered">
-      <div class="column is-four-fifths">
-        <h2 class="title is-3">Abstract</h2>
-        <div class="content has-text-justified">
+     <div class="column abstract-width">
+  <h2 class="title is-3 has-text-centered">Abstract</h2>
+  <div class="content abstract-text">
           <p>
              Model Predictive Control (MPC) is among the most widely adopted
  and reliable methods for robot control, relying critically on an accurate dynam
@@ -148,13 +159,33 @@ forms existing state-of-the-art techniques.
     <div class="columns is-multiline is-centered">
       
       <!-- Kolumna 1 -->
-      <div class="column is-one-quarter has-text-centered">
-        <h3 class="title is-5">Hyper MPC [ours]</h3>
-        <video autoplay controls muted loop height="100%">
-          <source src="static/videos/pendulum/hyperMPC/pendulum_sim_model_model_v1431_0_wandb_true-fire-416_b51ve9kc.mp4" type="video/mp4">
-        </video>
-        
-      </div>
+<div class="column is-one-quarter has-text-centered">
+  <h3 class="title is-5">HyperMPC [ours]</h3>
+  <video id="pendulum1" autoplay controls muted loop height="100%">
+    <source src="static/videos/pendulum/hyperMPC/pendulum_sim_model_model_v1431_0_wandb_true-fire-416_b51ve9kc.mp4" type="video/mp4">
+  </video>
+</div>
+
+<script>
+  const video = document.getElementById("pendulum1");
+  let borderAdded = false; // flaga, żeby nie dodawać ramki wielokrotnie
+
+  video.addEventListener("timeupdate", () => {
+    // Dodaj ramkę po 1s
+    if (video.currentTime >= 3 && !borderAdded) {
+      video.style.border = "6px solid limegreen"; 
+      video.style.borderRadius = "10px";
+      borderAdded = true;
+    }
+
+    // Jeśli film się zapętli (wróci na początek) -> usuń ramkę
+    if (video.currentTime < 0.5 && borderAdded) {
+      video.style.border = "none";
+      borderAdded = false;
+    }
+  });
+</script>
+      
 
       <!-- Kolumna 2 -->
       <div class="column is-one-quarter has-text-centered">

@@ -178,3 +178,12 @@ body {
   height: 24px; /* ustaw wysokość małego loga */
   width: auto;  /* szerokość proporcjonalnie */
 }
+
+.abstract-width {
+  max-width: 100%; /* odpowiada is-four-fifths */
+  margin: 0 auto;
+}
+
+.abstract-text {
+  text-align: justify;
+}
