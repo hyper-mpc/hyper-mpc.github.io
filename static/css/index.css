@@ -187,3 +187,11 @@ body {
 .abstract-text {
   text-align: justify;
 }
+
+/* Wszystkie filmiki w sekcji Pendulum */
+#pendulum1,
+#pendulum1 video,
+section .columns video {
+  border-radius: 12px;   /* dowolna wartość, np. 10px, 15px */
+  overflow: hidden;      /* żeby rogi były faktycznie obcięte */
+}
